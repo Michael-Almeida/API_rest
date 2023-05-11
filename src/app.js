@@ -1,50 +1,17 @@
 import express from "express"; //importa o express
 import db from "./config/dbConect.js"; //importando o db
-import livros from "./models/Livro.js";
-import routes from "./routes/index.js"
+import routes from "./routes/index.js";
 
 db.on("error", console.log.bind(console, "erro de conexão"));
-
 db.once("open", () => {
   console.log("Conexão com banco feita com sucesso");
 });
 
-const app = express(); //recebe instância do 
+const app = express(); //recebe instância do express
 
-app.use(express.json()); //Recurso para interpretar o que chega por post ou put
+app.use(express.json()); //Recurso para interpretar o que é enviado no momento do post ou put
 
-routes(app)
-
-/* const livros = [
-  { id: 1, titulo: "Senhor dos aneis" },
-  { id: 2, titulo: "O Hobit" },
-]; */
-
-
-
-app.get("/livros/:id", (req, res) => {
-  let index = buscaLivro(req.params.id);
-  res.status(200).json(livros[index]);
-});
-
-
-app.put("/livros/:id", (req, res) => {
-  let index = buscaLivro(req.params.id);
-  livros[index].titulo = req.body.titulo;
-  res.json(livros);
-});
-
-//função para localizar o livro pelo id
-function buscaLivro(id) {
-  return livros.findIndex((livro) => livro.id == id);
-}
+routes(app); //criar root para que as rotas possam ser exportadas
 
 //exportando para que outros arquivos possam utilizar
 export default app;
-
-app.delete("/livros/:id", (req, res) => {
-  let { id } = req.params;
-  let index = buscaLivro(id);
-  livros.splice(index, 1);
-  res.send(`Livro ${id} excluído com sucesso!`);
-});

@@ -1,6 +1,8 @@
 import express from "express";
 import LivroController from "../controllers/livrosControler.js";
 
+//Para onde será direcionado
+
 const router = express.Router();
 
 router
