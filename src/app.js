@@ -1,21 +1,34 @@
-import express from "express"; //importa
+import express from "express"; //importa o express
+import db from "./config/dbConect.js"; //importando o db
+import livros from "./models/Livro.js";
+import routes from "./routes/index.js"
 
-const app = express(); //recebe instância do express
+db.on("error", console.log.bind(console, "erro de conexão"));
+
+db.once("open", () => {
+  console.log("Conexão com banco feita com sucesso");
+});
+
+const app = express(); //recebe instância do 
 
 app.use(express.json()); //Recurso para interpretar o que chega por post ou put
 
-const livros = [
+routes(app)
+
+/* const livros = [
   { id: 1, titulo: "Senhor dos aneis" },
   { id: 2, titulo: "O Hobit" },
-];
+]; */
 
-app.get("/", (req, res) => {
-  res.status(200).send("Curso de node");
-});
+// app.get("/", (req, res) => {
+//   res.status(200).send("Curso de node");
+// });
 
-app.get("/livros", (req, res) => {
-  res.status(200).json(livros);
-});
+// app.get("/livros", (req, res) => {
+//   livros.find((err, livros) => {
+//     res.status(200).json(livros);
+//   });
+// });
 
 app.get("/livros/:id", (req, res) => {
   let index = buscaLivro(req.params.id);
