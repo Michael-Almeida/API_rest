@@ -3,6 +3,7 @@ import express from "express"; //importa o express
 import db from "./config/dbConect.js"; //importando o db
 import routes from "./routes/index.js";
 import manipuladorDeErros from "./middlewares/manipuladorErros.js";
+import manipulador404 from "./middlewares/manipulador404.js";
 
 db.on("error", console.log.bind(console, "erro de conexão"));
 db.once("open", () => {
@@ -14,6 +15,8 @@ const app = express(); //recebe instância do express
 app.use(express.json()); //Recurso para interpretar o que é enviado no momento do post ou put
 
 routes(app); //criar root para que as rotas possam ser exportadas
+
+app.use(manipulador404);
 
 app.use(manipuladorDeErros);
 
