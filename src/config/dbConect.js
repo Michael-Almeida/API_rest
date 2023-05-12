@@ -1,6 +1,6 @@
-import mongoose from "mongoose" 
+import mongoose from "mongoose";
 
-mongoose.connect("mongodb+srv://michael:123@alura.xja8o3s.mongodb.net/alura-node"); //conectando com a string do mongo Atlas
+mongoose.connect(process.env.STRING_CONEXAO_DB); //conectando com a string do mongo Atlas
 
 let db = mongoose.connection;
 
