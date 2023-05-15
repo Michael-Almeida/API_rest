@@ -1,15 +1,18 @@
 import NaoEncontrado from "../erros/NaoEncontrado.js";
-import autores from "../models/autor.js";
+import { autores } from "../models/index.js";
 
 //Métodos http
 
 class AutorController {
   static listarAutores = async (req, res, next) => {
     try {
-      const autorResultado = await autores.find();
-      res.status(200).send(autorResultado);
+      const autorResultado = autores.find();
+
+      req.resultado = autorResultado;
+      next();
+    
     } catch (erro) {
-      next(erro);
+      res.status(500).json({ message: "Erro interno no servidor" });
     }
   };
 
